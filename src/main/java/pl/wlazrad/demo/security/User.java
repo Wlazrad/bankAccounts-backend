@@ -31,5 +31,13 @@ public class User {
     private BigDecimal money;
 
     private String password;
+
+    public User(String name, String surname, int pesel, BigDecimal money, String password) {
+        this.name = name;
+        this.surname = surname;
+        this.pesel = pesel;
+        this.money = money;
+        this.password = password;
+    }
 }
 
