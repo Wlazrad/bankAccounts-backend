@@ -2,32 +2,29 @@ package pl.wlazrad.demo.security.services;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import pl.wlazrad.demo.security.User;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private final Long id;
 
-    private String username;
+    private final String pesel;
 
     private String email;
 
     @JsonIgnore
-    private String password;
+    private final String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String username, String password) {
+    public UserDetailsImpl(Long id, String pesel, String password) {
         this.id = id;
-        this.username = username;
+        this.pesel = pesel;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
@@ -36,7 +33,7 @@ public class UserDetailsImpl implements UserDetails {
     public static UserDetailsImpl build(User user) {
         return new UserDetailsImpl(
                 user.getId(),
-                user.getName(),
+                user.getPesel(),
                 user.getPassword());
     }
 
@@ -60,7 +57,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return pesel;
     }
 
     @Override

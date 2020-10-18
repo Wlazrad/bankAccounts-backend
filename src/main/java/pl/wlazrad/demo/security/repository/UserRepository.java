@@ -12,7 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Boolean existsByPesel(String pesel);
 
-    Optional<User> findByName(String name);
+    Optional<User> findByPesel(String pesel);
 
     Boolean existsByName(String name);
 
