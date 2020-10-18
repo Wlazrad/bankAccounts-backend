@@ -1,21 +1,24 @@
 package pl.wlazrad.demo.domain;
 
-import org.springframework.data.annotation.CreatedBy;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import pl.wlazrad.demo.security.User;
 
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import java.time.ZonedDateTime;
+import java.util.List;
 
-public class Account {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Account extends User{
 
-    @CreatedBy
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by")
-    private User createdBy;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_subaccount")
+    private List<Subaccount> subaccountList;
 
     @CreatedDate
     @Column(name = "created_date")
