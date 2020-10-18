@@ -2,6 +2,7 @@ package pl.wlazrad.demo.security.request;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.pl.PESEL;
 
 import java.math.BigDecimal;
 
@@ -13,6 +14,7 @@ public class SignupRequest {
 
     private String surname;
 
+    @PESEL
     private int pesel;
 
     private BigDecimal money;
