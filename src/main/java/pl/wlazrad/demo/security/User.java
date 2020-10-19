@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.wlazrad.demo.domain.Subaccount;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -28,15 +30,15 @@ public class User {
 
     private String pesel;
 
-    private BigDecimal money;
-
     private String password;
 
-    public User(String name, String surname, String pesel, BigDecimal money, String password) {
+    @OneToMany
+    private List<Subaccount> subaccountList = new ArrayList<>();
+
+    public User(String name, String surname, String pesel, String password) {
         this.name = name;
         this.surname = surname;
         this.pesel = pesel;
-        this.money = money;
         this.password = password;
     }
 }

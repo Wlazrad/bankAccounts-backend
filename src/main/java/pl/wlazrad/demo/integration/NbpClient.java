@@ -20,11 +20,17 @@ public class NbpClient {
     HttpEntity<String> entity = new HttpEntity<>(headers);
 
     @PostConstruct
-    public ResponseEntity<NbpResult> sendRequest(){
+    public String getUsdAsk(){
         ResponseEntity<NbpResult> forEntity = restTemplate.getForEntity("http://api.nbp.pl/api/exchangerates/rates/c/usd/2016-04-04/", NbpResult.class, entity);
-        System.out.println(forEntity.getBody().getCurrency());
         System.out.println(forEntity.getBody().getRates().get(0).getAsk());
-        System.out.println(forEntity.getBody().getRates().get(0).getBid());
-        return forEntity;
+        return forEntity.getBody().getRates().get(0).getAsk();
     }
+
+    @PostConstruct
+    public String getUsdBid(){
+        ResponseEntity<NbpResult> forEntity = restTemplate.getForEntity("http://api.nbp.pl/api/exchangerates/rates/c/usd/2016-04-04/", NbpResult.class, entity);
+        System.out.println(forEntity.getBody().getRates().get(0).getBid());
+        return forEntity.getBody().getRates().get(0).getBid();
+    }
+
 }

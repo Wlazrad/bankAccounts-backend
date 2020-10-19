@@ -1,33 +1,20 @@
 package pl.wlazrad.demo.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 import pl.wlazrad.demo.security.User;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
-
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Entity
-@Table(	name = "subaccount",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "id")
-        })
-public class Subaccount{
-
+public class Subaccount extends Account{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int number;
-    private Currency currency;
-    private BigDecimal amount;
-
+    Currency currency;
+    BigDecimal amount;
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
+
 }

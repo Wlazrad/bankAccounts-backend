@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import pl.wlazrad.demo.repositories.SubaccountRepository;
 import pl.wlazrad.demo.security.User;
 import pl.wlazrad.demo.security.jwt.JwtUtils;
 import pl.wlazrad.demo.security.repository.UserRepository;
@@ -35,6 +36,9 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    SubaccountRepository subaccountRepository;
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -59,15 +63,29 @@ public class AuthController {
                     .body(new MessageResponse("Error: Pesel is already taken!"));
         }
 
-
-        // Create new user's account
+        // Create new user's accounts
         User user = new User(signUpRequest.getName(),
                 signUpRequest.getSurname(),
                 signUpRequest.getPesel(),
-                signUpRequest.getMoney(),
                 encoder.encode(signUpRequest.getPassword()));
-
+        userRepository.flush();
         userRepository.save(user);
+
+//        Subaccount subaccountPln = new Subaccount();
+//        subaccountPln.setAmount(signUpRequest.getMoney());
+//        subaccountPln.setCurrency(Currency.PLN);
+//
+//        subaccountRepository.flush();
+//        Subaccount subaccountUsd = new Subaccount();
+//        subaccountUsd.setAmount(new BigDecimal(0));
+//        subaccountUsd.setCurrency(Currency.USD);
+//        user.setSubaccountList(List.of(subaccountPln, subaccountUsd));
+//
+//        userRepository.flush();
+//        userRepository.save(user);
+
+
+
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
