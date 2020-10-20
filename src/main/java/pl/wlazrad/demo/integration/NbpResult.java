@@ -19,5 +19,4 @@ public class NbpResult {
     BigDecimal Bid;
     BigDecimal Ask;
     private List<Rate> Rates;
-
 }

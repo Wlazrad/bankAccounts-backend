@@ -8,29 +8,29 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
+
 public class NbpClient {
 
     private final RestTemplate restTemplate;
-    //http://api.nbp.pl/api/exchangerates/rates/c/usd/2016-04-04/
+    public static final String NBP_USD = "http://api.nbp.pl/api/exchangerates/rates/c/usd/" + LocalDate.now();
 
     HttpHeaders headers = new HttpHeaders();
     HttpEntity<String> entity = new HttpEntity<>(headers);
 
     @PostConstruct
     public String getUsdAsk(){
-        ResponseEntity<NbpResult> forEntity = restTemplate.getForEntity("http://api.nbp.pl/api/exchangerates/rates/c/usd/2016-04-04/", NbpResult.class, entity);
-        System.out.println(forEntity.getBody().getRates().get(0).getAsk());
-        return forEntity.getBody().getRates().get(0).getAsk();
+        ResponseEntity<NbpResult> forEntity = restTemplate.getForEntity(NBP_USD, NbpResult.class, entity);
+        return Objects.requireNonNull(forEntity.getBody()).getRates().get(0).getAsk();
     }
 
     @PostConstruct
     public String getUsdBid(){
-        ResponseEntity<NbpResult> forEntity = restTemplate.getForEntity("http://api.nbp.pl/api/exchangerates/rates/c/usd/2016-04-04/", NbpResult.class, entity);
-        System.out.println(forEntity.getBody().getRates().get(0).getBid());
-        return forEntity.getBody().getRates().get(0).getBid();
+        ResponseEntity<NbpResult> forEntity = restTemplate.getForEntity(NBP_USD, NbpResult.class, entity);
+        return Objects.requireNonNull(forEntity.getBody()).getRates().get(0).getBid();
     }
-
 }
