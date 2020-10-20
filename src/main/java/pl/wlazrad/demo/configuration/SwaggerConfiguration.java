@@ -46,7 +46,6 @@ public class SwaggerConfiguration implements WebMvcConfigurer {
                 .securityContexts(singletonList(createContext()));
     }
 
-
     private SecurityContext createContext() {
         return SecurityContext.builder()
                 .securityReferences(createRef())
@@ -65,5 +64,4 @@ public class SwaggerConfiguration implements WebMvcConfigurer {
     private SecurityScheme createSchema() {
         return new ApiKey("apiKey", "Authorization", "header");
     }
-
 }

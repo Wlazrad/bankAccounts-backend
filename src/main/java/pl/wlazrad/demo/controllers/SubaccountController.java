@@ -16,8 +16,7 @@ import static pl.wlazrad.demo.security.SecurityUtils.getCurrentUserPesel;
 
 @RestController
 @RequestMapping("/api")
-public class SubaccounrController {
-
+public class SubaccountController {
 
     @Autowired
     UserRepository userRepository;
