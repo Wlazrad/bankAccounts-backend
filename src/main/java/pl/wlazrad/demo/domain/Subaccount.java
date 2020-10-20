@@ -1,9 +1,11 @@
 package pl.wlazrad.demo.domain;
 
 import lombok.Data;
-import pl.wlazrad.demo.security.User;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 
 @Data
@@ -16,7 +18,4 @@ public class Subaccount extends Account {
     Currency currency;
 
     BigDecimal amount;
-
-    @ManyToOne
-    private User user;
 }

@@ -10,6 +10,7 @@ import pl.wlazrad.demo.security.User;
 import pl.wlazrad.demo.security.repository.UserRepository;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,12 +45,12 @@ public class SubaccountService {
             subaccountPln = subaccountList.get(1);
         }
         if (currency == Currency.PLN) {
-            subaccountPln.setAmount(subaccountPln.getAmount().subtract(amount));
-            subaccountUsd.setAmount(subaccountUsd.getAmount().add(amount.divide(new BigDecimal(nbpClient.getUsdAsk()))));
+            subaccountPln.setAmount(subaccountPln.getAmount().add(amount));
+            subaccountUsd.setAmount(subaccountUsd.getAmount().subtract(amount.divide(new BigDecimal(nbpClient.getUsdBid()),2,RoundingMode.CEILING)));
             subaccountRepository.save(subaccountPln);
             subaccountRepository.save(subaccountUsd);
         } else {
-            subaccountPln.setAmount(subaccountPln.getAmount().subtract(amount.multiply(new BigDecimal(nbpClient.getUsdBid()))));
+            subaccountPln.setAmount(subaccountPln.getAmount().subtract(amount.multiply(new BigDecimal(nbpClient.getUsdAsk()))));
             subaccountUsd.setAmount(subaccountUsd.getAmount().add(amount));
             subaccountRepository.save(subaccountPln);
             subaccountRepository.save(subaccountUsd);
