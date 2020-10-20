@@ -32,7 +32,7 @@ public class User {
 
     private String password;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     private List<Subaccount> subaccountList = new ArrayList<>();
 
     public User(String name, String surname, String pesel, String password) {
@@ -40,6 +40,14 @@ public class User {
         this.surname = surname;
         this.pesel = pesel;
         this.password = password;
+    }
+
+    public User(String name, String surname, String pesel, String password, List<Subaccount> subaccountList) {
+        this.name = name;
+        this.surname = surname;
+        this.pesel = pesel;
+        this.password = password;
+        this.subaccountList = subaccountList;
     }
 }
 

@@ -8,6 +8,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import pl.wlazrad.demo.domain.Currency;
+import pl.wlazrad.demo.domain.Subaccount;
 import pl.wlazrad.demo.repositories.SubaccountRepository;
 import pl.wlazrad.demo.security.User;
 import pl.wlazrad.demo.security.jwt.JwtUtils;
@@ -19,6 +21,8 @@ import pl.wlazrad.demo.security.response.MessageResponse;
 import pl.wlazrad.demo.security.services.UserDetailsImpl;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -35,7 +39,7 @@ public class AuthController {
 
     @Autowired
     JwtUtils jwtUtils;
-
+    
     @Autowired
     SubaccountRepository subaccountRepository;
 
@@ -63,28 +67,21 @@ public class AuthController {
                     .body(new MessageResponse("Error: Pesel is already taken!"));
         }
 
-        // Create new user's accounts
+        Subaccount subaccountPln = new Subaccount();
+        subaccountPln.setAmount(signUpRequest.getMoney());
+        subaccountPln.setCurrency(Currency.PLN);
+        Subaccount subaccountUsd = new Subaccount();
+        subaccountUsd.setAmount(new BigDecimal(0));
+        subaccountUsd.setCurrency(Currency.USD);
+        List<Subaccount> subaccountList = List.of(subaccountPln,subaccountUsd);
+
+        // Create new user's account
         User user = new User(signUpRequest.getName(),
                 signUpRequest.getSurname(),
                 signUpRequest.getPesel(),
-                encoder.encode(signUpRequest.getPassword()));
-        userRepository.flush();
+                encoder.encode(signUpRequest.getPassword()),
+                subaccountList);
         userRepository.save(user);
-
-//        Subaccount subaccountPln = new Subaccount();
-//        subaccountPln.setAmount(signUpRequest.getMoney());
-//        subaccountPln.setCurrency(Currency.PLN);
-//
-//        subaccountRepository.flush();
-//        Subaccount subaccountUsd = new Subaccount();
-//        subaccountUsd.setAmount(new BigDecimal(0));
-//        subaccountUsd.setCurrency(Currency.USD);
-//        user.setSubaccountList(List.of(subaccountPln, subaccountUsd));
-//
-//        userRepository.flush();
-//        userRepository.save(user);
-
-
 
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
