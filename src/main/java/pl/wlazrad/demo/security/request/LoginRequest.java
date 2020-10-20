@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class LoginRequest {
 
+    @ValidDateOfBirth
     private String pesel;
-
     private String password;
 }

@@ -73,7 +73,6 @@ public class DateOfBirthValidator implements ConstraintValidator<ValidDateOfBirt
         return month;
     }
 
-
     public int getBirthDay() {
         int day;
         day = 10 * PESEL[4];

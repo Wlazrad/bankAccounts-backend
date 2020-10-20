@@ -2,7 +2,6 @@ package pl.wlazrad.demo.security.request;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.pl.PESEL;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -17,7 +16,7 @@ public class SignupRequest {
     @NotBlank
     private String surname;
 
-    @PESEL
+    @ValidDateOfBirth
     @NotNull
     private String pesel;
 
